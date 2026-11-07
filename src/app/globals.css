@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+:root {
+  --gradient-hero: linear-gradient(135deg, #0d2b59 0%, #102f63 40%, #2161d9 100%);
+  --gradient-cta: linear-gradient(135deg, #102f63 0%, #2161d9 100%);
+  --shadow-card: 0 4px 20px rgba(16, 47, 99, 0.06);
+  --shadow-card-hover: 0 10px 28px rgba(16, 47, 99, 0.12);
+  --container: min(1120px, calc(100% - 2rem));
+}
+
+@theme inline {
+  --color-navy: #102f63;
+  --color-blue: #2161d9;
+  --color-dark-blue: #0d2b59;
+  --color-light-blue: #f2f7fd;
+  --color-text: #102f63;
+  --color-text-secondary: #64748b;
+  --color-border: #e2eaf4;
+  --font-sans: var(--font-inter);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+}
+
+body {
+  margin: 0;
+  background: #ffffff;
+  color: var(--color-text);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* Button links must not inherit section text color (e.g. hero text-white) */
+a[data-ui="button"] {
+  color: var(--btn-fg, inherit);
+  background-color: var(--btn-bg, transparent);
+}
+
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+:focus-visible {
+  outline: 2px solid #2161d9;
+  outline-offset: 3px;
+}
+
+.container-site {
+  width: var(--container);
+  margin-inline: auto;
+}
+
+.gradient-hero {
+  background: var(--gradient-hero);
+}
+
+.gradient-cta {
+  background: var(--gradient-cta);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.6s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-fade-up,
+  .rcm-node {
+    animation: none !important;
+    transition: none !important;
+  }
+}
