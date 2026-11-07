@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+@source "../components/**/*.{ts,tsx}";
+@source "./**/*.{ts,tsx}";
+
 :root {
   --gradient-hero: linear-gradient(135deg, #0d2b59 0%, #102f63 40%, #2161d9 100%);
   --gradient-cta: linear-gradient(135deg, #102f63 0%, #2161d9 100%);

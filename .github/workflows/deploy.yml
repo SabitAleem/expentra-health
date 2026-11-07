@@ -33,9 +33,30 @@ jobs:
       - name: Build static export
         run: npm run build
         env:
-          # Custom domain (root path). For repo subpath only, set NEXT_PUBLIC_BASE_PATH=/<repo-name>
+          # Custom domain at site root — must be empty for www.expentrahealth.com
           NEXT_PUBLIC_BASE_PATH: ""
           NEXT_PUBLIC_SITE_URL: https://www.expentrahealth.com
+
+      - name: Verify static assets
+        run: |
+          test -f out/.nojekyll
+          test -f out/index.html
+          CSS_COUNT=$(find out/_next -name '*.css' | wc -l)
+          if [ "$CSS_COUNT" -lt 1 ]; then
+            echo "No CSS files in out/_next"
+            exit 1
+          fi
+          if ! grep -rq '\.bg-navy' out/_next; then
+            echo "Tailwind utilities missing from build output"
+            exit 1
+          fi
+          if grep -q 'NEXT_PUBLIC_BASE_PATH' out/index.html 2>/dev/null; then
+            echo "Unexpected base path marker in HTML"
+          fi
+          if grep -oE 'href="[^"]+\.css"' out/index.html | head -1 | grep -q '/expentra-health/'; then
+            echo "HTML still references /expentra-health/ asset prefix — fix NEXT_PUBLIC_BASE_PATH"
+            exit 1
+          fi
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
